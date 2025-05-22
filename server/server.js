@@ -33,6 +33,18 @@ ${userData.links
 </body></html>`;
 }
 
+function generateNotFoundHTML(domain) {
+  return `<!DOCTYPE html>
+<html><head><title>Domain Not Found</title>
+<style>body{font-family:Arial;max-width:400px;margin:50px auto;text-align:center}
+.error{color:#e74c3c;}</style>
+</head><body>
+<h1 class="error">Domain Not Found</h1>
+<p>Sorry, the domain <strong>${domain}</strong> is not registered with our service.</p>
+<p>Please check the domain name and try again.</p>
+</body></html>`;
+}
+
 const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url);
   const domain = req.headers.host;
@@ -46,8 +58,8 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, { "Content-Type": "text/html" });
     res.end(generateHTML(userData));
   } else {
-    res.writeHead(404, { "Content-Type": "text/plain" });
-    res.end(`Domain ${domain} not found`);
+    res.writeHead(404, { "Content-Type": "text/html" });
+    res.end(generateNotFoundHTML(domain));
   }
 });
 
