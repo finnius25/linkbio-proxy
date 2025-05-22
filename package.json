@@ -1,0 +1,14 @@
+{
+  "name": "linkbio-proxy",
+  "version": "1.0.0",
+  "description": "Custom domain reverse proxy for link-in-bio service",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node server/server.js"
+  },
+  "keywords": ["reverse-proxy", "custom-domains", "link-in-bio"],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {}
+}
