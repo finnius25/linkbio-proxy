@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  # Node.js application container
+  node-app:
+    build: .
+    container_name: linkbio-node-app
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    networks:
+      - app-network
+    # Don't expose port directly - only nginx should be accessible from outside
+
+  # Nginx reverse proxy container
+  nginx:
+    image: nginx:alpine
+    container_name: linkbio-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443" # For future HTTPS setup
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - node-app
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
