@@ -2,7 +2,7 @@
 # Caddy automatically handles HTTPS certificates via Let's Encrypt
 
 # Handle all domains that your Node.js app serves
-api.trymogee.com, user1.finneykoshy.com {
+api.trymogee.com {
     # Proxy all requests to the Node.js container
     reverse_proxy node-app:3000 {
         # Pass the original host header (important for your domain-based routing)
