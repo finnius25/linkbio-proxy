@@ -1,0 +1,20 @@
+# Caddyfile - replaces nginx with automatic SSL
+# Caddy automatically handles HTTPS certificates via Let's Encrypt
+
+# Handle all domains that your Node.js app serves
+api.trymogee.com, user1.finneykoshy.com {
+    # Proxy all requests to the Node.js container
+    reverse_proxy node-app:3000 {
+        # Pass the original host header (important for your domain-based routing)
+        header_up Host {host}
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+}
+
+# Optional: catch-all for other domains (returns 404 or redirects)
+# You can uncomment this if you want to handle unknown domains differently
+# :80, :443 {
+#     respond "Domain not configured" 404
+# } 
